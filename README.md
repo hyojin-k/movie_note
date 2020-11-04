@@ -54,4 +54,4 @@
 -->
 
 XYZ license를 준수합니다. ``LICENSE``에서 자세한 정보를 확인할 수 있습니다.  
-(예시) [https://github.com/yourname/github-link/LICENSE.md](https://github.com/zo2kim/myproject/LICENSE.md)
+[https://github.com/zo2kim/myproject/LICENSE.md]
