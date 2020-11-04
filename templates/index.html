@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <!-- FONT -->
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Raleway:ital@1&display=swap"
+              rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+        <title>MOVIE NOTE</title>
+
+        <script>
+
+            // 리뷰 추가 버튼
+            function writeBtn() {
+                if ($('#write_wrap').css('display') == 'block') {
+                    $('#write_wrap').hide();
+                } else {
+                    $('#write_wrap').show();
+                }
+            }
+
+             // 리뷰 창 닫기
+            function close() {
+                $('#write_wrap').hide();
+            }
+
+            // 리뷰 작성 완료
+            function comBtn() {
+
+            }
+
+            // 리뷰
+
+            $(document).ready(function () {
+                $("#reviews-box").html("");
+                showReview();
+            });
+
+            function makeReview() {
+                // 1. 제목, 저자, 리뷰 내용을 가져옵니다.
+                // 2. 제목, 저자, 리뷰 중 하나라도 입력하지 않았을 경우 alert를 띄웁니다.
+                // 3. POST /review 에 저장을 요청합니다.
+                $.ajax({
+                    type: "POST",
+                    url: "/review",
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            alert(response["msg"]);
+                            window.location.reload();
+                        }
+                    }
+                })
+            }
+
+            function showReview() {
+                // 1. 리뷰 목록을 서버에 요청하기
+                // 2. 요청 성공 여부 확인하기
+                // 3. 요청 성공했을 때 리뷰를 올바르게 화면에 나타내기
+                $.ajax({
+                    type: "GET",
+                    url: "/review",
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            alert(response["msg"]);
+                        } else {
+                            alert("리뷰를 받아오지 못했습니다");
+                        }
+                    }
+                })
+            }
+
+
+
+
+
+            // 차트
+            google.charts.load("current", {packages: ["corechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Movie', 'Movie Genre'],
+                    ['드라마', 11],
+                    ['코미디', 5],
+                    ['액션', 2],
+                    ['기타', 2]
+                ]);
+
+                var options = {
+                    title: '나의 영화 취향',
+                    pieHole: 0.5,
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(data, options);
+            }
+
+        </script>
+    </head>
+    <body>
+        <header>
+            <h1 class="header">MOVIE NOTE</h1>
+        </header>
+        <div class="main_center">
+            <div class="my_list">
+                <h2>MY LIST</h2>
+                <div class="add_review">
+                    <button onclick="writeBtn()" class="write_btn">ADD REVIEW</button>
+                    <div id="write_wrap" class="write_wrap">
+                        <div class="write_title">
+                            <span class="write_div">제목</span>
+                            <input type="text" placeholder="제목을 입력하세요">
+                        </div>
+                        <div class="write_url">
+                            <span class="write_div">URL</span>
+                            <input type="text" placeholder="URL을 입력하세요">
+                        </div>
+                        <div class="write_review">
+                            <span class="write_div">리뷰</span>
+                            <textarea name="" id="" cols="30" rows="10"></textarea>
+                        </div>
+                        <button onclick="comBtn()" id="add_btn" class="write_complete">ADD</button>
+                        <button onclick="close()" id="close_btn" class="close">
+                            <span class="material-icons">
+                                clear
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="reviews clearfix">
+                    <button class="detail_btn">
+                        <img class="review_img"
+                             src="https://movie-phinf.pstatic.net/20201021_273/16032618054109Yvje_JPEG/movie_image.jpg"
+                             alt="">
+                        <p class="review_line">" 어제의 너보다 오늘 더 성장했는데~~??!! "</p>
+                        <p class="review_title">&#60; 삼진그룹 영어 토익반 &#62;</p>
+                    </button>
+                    <button class="detail_btn">
+                        <img class="review_img"
+                             src="https://movie-phinf.pstatic.net/20201014_280/16026390107613Rrc8_JPEG/movie_image.jpg"
+                             alt="">
+                        <p class="review_line">" 세상에서 제일 쓸모없고 가치없는 말이 '그만하면 잘했어(good job)'야 "</p>
+                        <p class="review_title">&#60; 위플래쉬 &#62;</p>
+                    </button>
+                    <button class="detail_btn">
+                        <img class="review_img"
+                             src="https://movie-phinf.pstatic.net/20200929_240/1601370752754trKxu_JPEG/movie_image.jpg"
+                             alt="">
+                        <p class="review_line">" 머리두 돌석 돌대가리?? "</p>
+                        <p class="review_title">&#60; 담보 &#62;</p>
+                    </button>
+                    <div class="btn_wrap">
+                        <button class="more_btn">MORE</button>
+                    </div>
+                </div>
+            </div>
+            <div class="result">
+                <h2>MY PREFERENCE</h2>
+                <div class="result_wrap clearfix">
+                    <div class="genre">
+                        <h3>GENRE</h3>
+                        <div id="donutchart"></div>
+                        <div class="pref_wrap">
+                            <h4>my list</h4>
+                            <ul>
+                                <li>삼진그룹 영어 토익반</li>
+                                <li>위플래쉬</li>
+                                <li>담보</li>
+                            </ul>
+                            <h4>recommend</h4>
+                            <ul>
+                                <li>삼진그룹 영어 토익반</li>
+                                <li>위플래쉬</li>
+                                <li>담보</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="actor">
+                        <h3>ACTOR</h3>
+                        <div class="actor_wrap clearfix">
+                            <button class="actor_btn">
+                                <img class="actor_img"
+                                     src="https://search.pstatic.net/common/?src=https%3A%2F%2Fssl.pstatic.net%2Fsstatic%2Fpeople%2Fportrait%2F202004%2F20200414101216768.jpg&type=u120_150&quality=95"
+                                     alt="">
+                                <p class="actor_name">고아성</p>
+                            </button>
+                            <button class="actor_btn">
+                                <img class="actor_img"
+                                     src="https://search.pstatic.net/common/?src=https%3A%2F%2Fssl.pstatic.net%2Fsstatic%2Fpeople%2Fportrait%2F201709%2F20170908110821152.jpg&type=u120_150&quality=95"
+                                     alt="">
+                                <p class="actor_name">이솜</p>
+                            </button>
+                            <button class="actor_btn">
+                                <img class="actor_img"
+                                     src="https://search.pstatic.net/common/?src=https%3A%2F%2Fssl.pstatic.net%2Fsstatic%2Fpeople%2Fportrait%2F201710%2F20171027164708628.jpg&type=u120_150&quality=95"
+                                     alt="">
+                                <p class="actor_name">박혜수</p>
+                            </button>
+                        </div>
+                        <div class="pref_wrap">
+                            <h4>my list</h4>
+                            <ul>
+                                <li>삼진그룹 영어 토익반</li>
+                                <li>위플래쉬</li>
+                                <li>담보</li>
+                            </ul>
+                            <h4>recommend</h4>
+                            <ul>
+                                <li>삼진그룹 영어 토익반</li>
+                                <li>위플래쉬</li>
+                                <li>담보</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

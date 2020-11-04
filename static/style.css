@@ -1,0 +1,243 @@
+@charset "utf-8";
+
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Raleway', sans-serif;
+
+}
+
+button {
+    background: none;
+    outline: none;
+    cursor: pointer;
+}
+
+input {
+    background: none;
+    outline: none;
+}
+
+/*공통요소*/
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/*-----------------------------------------------------------*/
+
+/* 헤더 */
+
+.header {
+    text-align: center;
+    padding: 80px 0;
+}
+
+h2 {
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    margin: 80px 0;
+}
+
+/*-----------------------------------------------------------*/
+
+/* 리뷰 목록 */
+
+.main_center {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+/* 리뷰 작성하기 */
+
+.add_review {
+
+}
+
+.write_btn {
+    display: block;
+    font-family: 'Raleway', sans-serif;
+    width: 30%;
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin: 0 auto 80px;
+}
+
+.write_wrap {
+    display: none;
+    position: relative;
+    border: 2px solid black;
+    box-sizing: border-box;
+    width: 50%;
+    padding: 20px;
+    margin: 0 auto 80px;
+    border-radius: 20px;
+}
+
+.write_wrap div {
+    margin: 10px;
+}
+
+.write_div {
+    margin-right: 10px;
+}
+
+.write_title input, .write_url input {
+    border-bottom: 1px solid #444444;
+    padding: 5px;
+}
+
+.write_review {
+
+}
+
+.write_review textarea {
+    border: 1px solid #444444;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100px;
+    resize: none;
+    margin-top: 10px;
+}
+
+.write_complete {
+    display: block;
+    font-family: 'Raleway', sans-serif;
+    padding: 10px 20px;
+    margin: 0 auto;
+    background-color: #444444;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+/* 리스트 */
+
+.detail_btn {
+    border: 1px solid black;
+    box-sizing: border-box;
+    width: 30%;
+    float: left;
+}
+
+.detail_btn:nth-child(3n-1) {
+    margin: 0 5%;
+}
+
+.review_img {
+    box-sizing: border-box;
+    display: block;
+    width: 80%;
+    margin: 30px 10%;
+}
+
+.review_line {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 18px;
+    font-style: italic;
+    text-align: center;
+    padding: 0 10%;
+}
+
+.review_title {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.btn_wrap {
+    width: 100%;
+    float: left;
+}
+
+.more_btn {
+    display: block;
+    font-family: 'Raleway', sans-serif;
+    width: 30%;
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin: 80px auto;
+}
+
+/*-----------------------------------------------------------*/
+
+/* 취향 분석 */
+
+.result_wrap {
+    margin: 80px 0;
+}
+
+h3{
+    text-align: center;
+}
+h4{
+
+}
+.pref_wrap{
+    margin: 10px;
+}
+.pref_wrap ul{
+    padding: 10px 0;
+}
+.pref_wrap ul li{
+    padding: 5px 0;
+}
+
+/* 장르 */
+
+.genre {
+    width: 45%;
+    margin-right: 10%;
+    float: left;
+}
+
+#donutchart {
+    width: 80%;
+    height: 250px;
+    margin: 0 auto;
+}
+
+/* 배우 */
+
+.actor {
+    width: 45%;
+    float: left;
+}
+
+.actor_wrap {
+    margin: 40px 0;
+}
+
+.actor_btn {
+    float: left;
+    width: 30%;
+}
+
+.actor_btn:nth-child(2) {
+    margin: 0 5%;
+}
+
+.actor_img {
+
+}
