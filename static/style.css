@@ -43,16 +43,27 @@ input {
 
 /* 헤더 */
 
-.header {
+header{
     text-align: center;
+
+}
+.header {
     padding: 80px 0;
 }
+.header_line{
+    display: inline-block;
+    width: 40px;
+    background-color: #bdbdbd;
+    height: 0.5px;
+}
+
 
 h2 {
     font-family: 'Raleway', sans-serif;
     text-align: center;
     margin: 80px 0;
 }
+
 
 /*-----------------------------------------------------------*/
 
@@ -98,7 +109,7 @@ h2 {
     margin-right: 10px;
 }
 
-.write_title input, .write_url input {
+.write_date input, .write_title input, .write_url input {
     border-bottom: 1px solid #444444;
     padding: 5px;
 }
@@ -134,36 +145,66 @@ h2 {
 
 /* 리스트 */
 
-.detail_btn {
-    border: 1px solid black;
+.review {
+    border: 1px solid #757575;
     box-sizing: border-box;
-    width: 30%;
+    position: relative;
+    width: 45%;
     float: left;
+    margin: 15px 0;
 }
 
-.detail_btn:nth-child(3n-1) {
-    margin: 0 5%;
+.review:nth-child(2n) {
+    margin-left: 5%;
 }
 
 .review_img {
     box-sizing: border-box;
     display: block;
-    width: 80%;
-    margin: 30px 10%;
+    width: 40%;
+    margin: 30px;
+    float: left;
 }
 
+.review_wrap {
+    width: 40%;
+    float: left;
+    margin-top: 30px;
+    text-align: center;
+
+}
+
+.review_date {
+    margin-bottom: 10px;
+}
+.review_title {
+    font-weight: bold;
+}
+.line {
+    display: inline-block;
+    width: 24px;
+    background-color: #bdbdbd;
+    margin: 12px 0 8px 0;
+    height: 0.5px;
+}
 .review_line {
     font-family: 'Nanum Myeongjo', serif;
-    font-size: 18px;
     font-style: italic;
-    text-align: center;
-    padding: 0 10%;
+    font-size: 14px;
+    padding: 0 5%;
+    line-height: 1.5;
 }
 
-.review_title {
-    text-align: center;
-    padding: 30px 0;
+.review_detail {
+
 }
+
+.delete {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
 
 .btn_wrap {
     width: 100%;
@@ -188,19 +229,37 @@ h2 {
     margin: 80px 0;
 }
 
-h3{
+.result_sub {
     text-align: center;
 }
-h4{
 
+.line2 {
+    display: inline-block;
+    width: 32px;
+    background-color: #bdbdbd;
+    margin: 28px 0;
+    height: 0.8px;
 }
-.pref_wrap{
+
+h4 {
+    width: 80%;
+    border: 1px solid #424242;
+    padding: 5px 20px;
+    margin-top: 20px;
+    border-radius: 30px;
+}
+
+.pref_wrap {
+    /*border: 1px solid red;*/
+    /*box-sizing: border-box;*/
     margin: 10px;
 }
-.pref_wrap ul{
+
+.pref_wrap ul {
     padding: 10px 0;
 }
-.pref_wrap ul li{
+
+.pref_wrap ul li {
     padding: 5px 0;
 }
 
@@ -213,8 +272,10 @@ h4{
 }
 
 #donutchart {
+    /*border: 1px solid blue;*/
+    /*box-sizing: border-box;*/
     width: 80%;
-    height: 250px;
+    height: 200px;
     margin: 0 auto;
 }
 
@@ -226,7 +287,9 @@ h4{
 }
 
 .actor_wrap {
-    margin: 40px 0;
+    /*border: 1px solid blue;*/
+    /*box-sizing: border-box;*/
+    margin: 16px 0;
 }
 
 .actor_btn {
@@ -240,4 +303,7 @@ h4{
 
 .actor_img {
 
+}
+.actor_name{
+    line-height: 2;
 }

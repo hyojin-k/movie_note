@@ -20,104 +20,19 @@
                 integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
                 crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 
         <title>MOVIE NOTE</title>
 
         <script>
 
-            // 리뷰 추가 버튼
-            function writeBtn() {
-                if ($('#write_wrap').css('display') == 'block') {
-                    $('#write_wrap').hide();
-                } else {
-                    $('#write_wrap').show();
-                }
-            }
-
-             // 리뷰 창 닫기
-            function close() {
-                $('#write_wrap').hide();
-            }
-
-            // 리뷰 작성 완료
-            function comBtn() {
-
-            }
-
-            // 리뷰
-
-            $(document).ready(function () {
-                $("#reviews-box").html("");
-                showReview();
-            });
-
-            function makeReview() {
-                // 1. 제목, 저자, 리뷰 내용을 가져옵니다.
-                // 2. 제목, 저자, 리뷰 중 하나라도 입력하지 않았을 경우 alert를 띄웁니다.
-                // 3. POST /review 에 저장을 요청합니다.
-                $.ajax({
-                    type: "POST",
-                    url: "/review",
-                    data: {},
-                    success: function (response) {
-                        if (response["result"] == "success") {
-                            alert(response["msg"]);
-                            window.location.reload();
-                        }
-                    }
-                })
-            }
-
-            function showReview() {
-                // 1. 리뷰 목록을 서버에 요청하기
-                // 2. 요청 성공 여부 확인하기
-                // 3. 요청 성공했을 때 리뷰를 올바르게 화면에 나타내기
-                $.ajax({
-                    type: "GET",
-                    url: "/review",
-                    data: {},
-                    success: function (response) {
-                        if (response["result"] == "success") {
-                            alert(response["msg"]);
-                        } else {
-                            alert("리뷰를 받아오지 못했습니다");
-                        }
-                    }
-                })
-            }
-
-
-
-
-
-            // 차트
-            google.charts.load("current", {packages: ["corechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Movie', 'Movie Genre'],
-                    ['드라마', 11],
-                    ['코미디', 5],
-                    ['액션', 2],
-                    ['기타', 2]
-                ]);
-
-                var options = {
-                    title: '나의 영화 취향',
-                    pieHole: 0.5,
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-                chart.draw(data, options);
-            }
-
         </script>
     </head>
     <body>
         <header>
             <h1 class="header">MOVIE NOTE</h1>
+            <span class="header_line"></span>
         </header>
         <div class="main_center">
             <div class="my_list">
@@ -125,19 +40,24 @@
                 <div class="add_review">
                     <button onclick="writeBtn()" class="write_btn">ADD REVIEW</button>
                     <div id="write_wrap" class="write_wrap">
+                        <div class="write_date">
+                            <span class="write_div">날짜</span>
+                            <input id="post_date" type="text" placeholder="작성날짜를 입력하세요">
+                        </div>
                         <div class="write_title">
                             <span class="write_div">제목</span>
-                            <input type="text" placeholder="제목을 입력하세요">
+                            <input id="post_title" type="text" placeholder="제목을 입력하세요">
                         </div>
                         <div class="write_url">
                             <span class="write_div">URL</span>
-                            <input type="text" placeholder="URL을 입력하세요">
+                            <input id="post_url" type="text" placeholder="URL을 입력하세요">
                         </div>
                         <div class="write_review">
                             <span class="write_div">리뷰</span>
-                            <textarea name="" id="" cols="30" rows="10"></textarea>
+                            <textarea id="post_comment" cols="30" rows="5" placeholder="130자 이내로 작성하세요"
+                                      onkeyup='validateLength(this)'></textarea>
                         </div>
-                        <button onclick="comBtn()" id="add_btn" class="write_complete">ADD</button>
+                        <button onclick="writeComplete()" id="add_btn" class="write_complete">ADD</button>
                         <button onclick="close()" id="close_btn" class="close">
                             <span class="material-icons">
                                 clear
@@ -145,28 +65,36 @@
                         </button>
                     </div>
                 </div>
-                <div class="reviews clearfix">
-                    <button class="detail_btn">
+                <div id="review_box" class="reviews clearfix">
+                    <div class="review clearfix">
                         <img class="review_img"
                              src="https://movie-phinf.pstatic.net/20201021_273/16032618054109Yvje_JPEG/movie_image.jpg"
                              alt="">
-                        <p class="review_line">" 어제의 너보다 오늘 더 성장했는데~~??!! "</p>
-                        <p class="review_title">&#60; 삼진그룹 영어 토익반 &#62;</p>
-                    </button>
-                    <button class="detail_btn">
+                        <div class="review_wrap">
+                            <p class="review_date">20201101</p>
+                            <p class="review_title">삼진그룹 영어 토익반</p>
+                            <span class="line"></span>
+                            <p class="review_line">" 그와 사는가 그들은 군영과 과실이 풍부하게 실로 곧 뿐이다. 얼마나 두기 하는 곳으로 꽃 청춘이 따뜻한 않는 봄바람이다.
+                                아니더면, 우리 수 찬미를 피다. 동해물과 백두산이 마르고 닳도"</p>
+                        </div>
+                        <button onclick="close()" id="delete_btn" class="delete">
+                            <span class="material-icons">
+                                clear
+                            </span>
+                        </button>
+                    </div>
+                    <div class="review clearfix">
                         <img class="review_img"
                              src="https://movie-phinf.pstatic.net/20201014_280/16026390107613Rrc8_JPEG/movie_image.jpg"
                              alt="">
-                        <p class="review_line">" 세상에서 제일 쓸모없고 가치없는 말이 '그만하면 잘했어(good job)'야 "</p>
-                        <p class="review_title">&#60; 위플래쉬 &#62;</p>
-                    </button>
-                    <button class="detail_btn">
-                        <img class="review_img"
-                             src="https://movie-phinf.pstatic.net/20200929_240/1601370752754trKxu_JPEG/movie_image.jpg"
-                             alt="">
-                        <p class="review_line">" 머리두 돌석 돌대가리?? "</p>
-                        <p class="review_title">&#60; 담보 &#62;</p>
-                    </button>
+                        <div class="review_wrap">
+                            <p class="review_date">20201101</p>
+                            <p class="review_title">위플래쉬</p>
+                            <span class="line"></span>
+                            <p class="review_line">" 동해물과 백두산이 마르고 닳도록 하으님이 보우하사 우리 나라 만세 무궁화 삼"</p>
+                        </div>
+                    </div>
+
                     <div class="btn_wrap">
                         <button class="more_btn">MORE</button>
                     </div>
@@ -175,26 +103,28 @@
             <div class="result">
                 <h2>MY PREFERENCE</h2>
                 <div class="result_wrap clearfix">
-                    <div class="genre">
+                    <div class="result_sub genre">
                         <h3>GENRE</h3>
+                        <span class="line2"></span>
                         <div id="donutchart"></div>
                         <div class="pref_wrap">
-                            <h4>my list</h4>
+                            <h4>MY LIST</h4>
                             <ul>
                                 <li>삼진그룹 영어 토익반</li>
                                 <li>위플래쉬</li>
                                 <li>담보</li>
                             </ul>
-                            <h4>recommend</h4>
-                            <ul>
-                                <li>삼진그룹 영어 토익반</li>
-                                <li>위플래쉬</li>
-                                <li>담보</li>
-                            </ul>
+<!--                            <h4>RECOMMEND</h4>-->
+<!--                            <ul>-->
+<!--                                <li>삼진그룹 영어 토익반</li>-->
+<!--                                <li>위플래쉬</li>-->
+<!--                                <li>담보</li>-->
+<!--                            </ul>-->
                         </div>
                     </div>
-                    <div class="actor">
+                    <div class="result_sub actor">
                         <h3>ACTOR</h3>
+                        <span class="line2"></span>
                         <div class="actor_wrap clearfix">
                             <button class="actor_btn">
                                 <img class="actor_img"
@@ -216,18 +146,18 @@
                             </button>
                         </div>
                         <div class="pref_wrap">
-                            <h4>my list</h4>
+                            <h4>MY LIST</h4>
                             <ul>
                                 <li>삼진그룹 영어 토익반</li>
                                 <li>위플래쉬</li>
                                 <li>담보</li>
                             </ul>
-                            <h4>recommend</h4>
-                            <ul>
-                                <li>삼진그룹 영어 토익반</li>
-                                <li>위플래쉬</li>
-                                <li>담보</li>
-                            </ul>
+<!--                            <h4>RECOMMEND</h4>-->
+<!--                            <ul>-->
+<!--                                <li>삼진그룹 영어 토익반</li>-->
+<!--                                <li>위플래쉬</li>-->
+<!--                                <li>담보</li>-->
+<!--                            </ul>-->
                         </div>
                     </div>
                 </div>
