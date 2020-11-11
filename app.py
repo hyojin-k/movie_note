@@ -66,13 +66,22 @@ def write_review():
             'actor_sec': actor_sec,
             'image_trd': image_trd,
             'actor_trd': actor_trd,
-            # 'filmo': filmo_receive,
             'comment': comment_receive
         }
 
         db.reviews.insert_one(doc)
 
     return jsonify({'result': 'success', 'msg': '리뷰가 저장되었습니다.'})
+
+
+@app.route('/genre', methods=['GET'])
+def count_genre():
+    genre = list(db.reviews.aggregate([
+        {'$group':{'_id':'$genre', 'count':{'$sum':1}}},
+        # {'$limit':1}
+    ]))
+
+    return jsonify({'result': 'success', 'genre': genre })
 
 
 @app.route('/review', methods=['GET'])
