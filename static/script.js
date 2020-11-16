@@ -12,6 +12,9 @@ function writeBtn() {
 $(document).ready(function () {
     $('#review_box').html('');
     getReview();
+    // getChart();
+    $('#actors').html('');
+    getActor();
 });
 
 function writeComplete() {
@@ -22,16 +25,16 @@ function writeComplete() {
 
     if (date == '') {
         alert('날짜를 입력해주세요');
-        // return;
+        return;
     } else if (title == '') {
         alert('제목을 입력해주세요');
-        // return;
+        return;
     } else if (url == '') {
         alert('url을 입력해주세요');
-        // return;
+        return;
     } else if (comment == '') {
         alert('리뷰를 입력해주세요');
-        // return;
+        return;
     } else {
 
         $.ajax({
@@ -58,7 +61,7 @@ function getReview() {
             if (response["result"] == "success") {
                 let reviews = response['reviews'];
 
-                for(let i=0; i<reviews.length; i++){
+                for (let i = 0; i < reviews.length; i++) {
                     let poster = reviews[i]['poster'];
                     let date = reviews[i]['date'];
                     let title = reviews[i]['title'];
@@ -83,7 +86,6 @@ function getReview() {
 
                     $('#review_box').append(tempHtml);
                 }
-
             } else {
                 alert("리뷰를 받아오지 못했습니다");
             }
@@ -103,23 +105,82 @@ function validateLength(obj) {
 
 
 //차트
-google.charts.load("current", {packages: ["corechart"]});
-google.charts.setOnLoadCallback(drawChart);
+//
+// function getChart() {
+//     $.ajax({
+//         type: "GET",
+//         url: "/genre",
+//         data: {},
+//         success: function (response) {
+//             if (response["result"] == "success") {
+//                 // let genre = response['genre'];
+//                 let tempHtml = ``
+//                 google.charts.load("current", {packages: ["corechart"]});
+//                 google.charts.setOnLoadCallback(drawChart);
+//
+//                 function drawChart() {
+//                     var data = google.visualization.arrayToDataTable([
+//                         ['{{ "Movie" }}', '{{ "Movie Genre" }}']
+//                         // ['드라마', 11],
+//                         // ['코미디', 5],
+//                         // ['액션', 2],
+//                         // ['기타', 2]
+//                     ]);
+//
+//                     var options = {
+//                         title: '나의 영화 취향',
+//                         pieHole: 0.5,
+//                     };
+//
+//                     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+//                     chart.draw(data, options);
+//                 }
+//             }
+//         }
+//     })
+// }
 
-function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Movie', 'Movie Genre'],
-        ['드라마', 11],
-        ['코미디', 5],
-        ['액션', 2],
-        ['기타', 2]
-    ]);
 
-    var options = {
-        title: '나의 영화 취향',
-        pieHole: 0.5,
-    };
+//배우
 
-    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-    chart.draw(data, options);
+function getActor() {
+
+    $.ajax({
+        type: "GET",
+        url: "/actor",
+        data: {},
+        success: function (response) {
+            if (response["result"] == "success") {
+                let actor = response['actor'];
+
+                let image_fir = actor[0]['_id']['image'];
+                let actor_fir = actor[0]['_id']['actor'];
+                let image_sec = actor[1]['_id']['image'];
+                let actor_sec = actor[1]['_id']['actor'];
+                let image_trd = actor[2]['_id']['image'];
+                let actor_trd = actor[2]['_id']['actor'];
+
+                let tempHtml = `<button class="actor_btn">
+                                    <img class="actor_img"
+                                         src="${image_fir}"
+                                         alt="">
+                                    <p class="actor_name">${actor_fir}</p>
+                                </button>
+                                <button class="actor_btn">
+                                    <img class="actor_img"
+                                         src="${image_sec}"
+                                         alt="">
+                                    <p class="actor_name">${actor_sec}</p>
+                                </button>
+                                <button class="actor_btn">
+                                    <img class="actor_img"
+                                         src="${image_trd}"
+                                         alt="">
+                                    <p class="actor_name">${actor_trd}</p>
+                                </button>`
+
+                $('#actors').append(tempHtml);
+            }
+        }
+    })
 }
