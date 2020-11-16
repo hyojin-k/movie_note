@@ -60,12 +60,20 @@ def write_review():
             'poster' : url_poster,
             'title': url_title,
             'genre': genre,
-            'image_fir': image_fir,
-            'actor_fir': actor_fir,
-            'image_sec': image_sec,
-            'actor_sec': actor_sec,
-            'image_trd': image_trd,
-            'actor_trd': actor_trd,
+            'actors' : [
+                {
+                    'actor': actor_fir,
+                    'image': image_fir
+                 },
+                {
+                    'actor': actor_sec,
+                    'image': image_sec
+                },
+                {
+                    'actor': actor_trd,
+                    'image': image_trd
+                }
+            ],
             'comment': comment_receive
         }
 
@@ -78,10 +86,31 @@ def write_review():
 def count_genre():
     genre = list(db.reviews.aggregate([
         {'$group':{'_id':'$genre', 'count':{'$sum':1}}},
-        # {'$limit':1}
+        {'$limit':5}
     ]))
 
-    return jsonify({'result': 'success', 'genre': genre })
+    # data = {'Movie' : 'Movie Genre', genre[0]['_id'] : genre[0]['count'], genre[1]['_id'] : genre[1]['count'], genre[2]['_id'] : genre[2]['count'], genre[3]['_id'] : genre[3]['count'], genre[4]['_id'] : genre[4]['count'] }
+    # print(data)
+
+    # return render_template('index.html', data = data),
+    return jsonify({'result': 'success', 'genre': genre})
+
+
+
+@app.route('/actor', methods=['GET'])
+def count_actor():
+    actor = list(db.reviews.aggregate([
+
+        {'$unwind':{'path':'$actors'}},
+        {'$group':{'_id':'$actors', 'count':{'$sum':1}}},
+        {'$sort':{'count':-1}},
+        {'$limit':3}
+
+    ]))
+
+    # print(actor)
+
+    return jsonify({'result': 'success', 'actor': actor })
 
 
 @app.route('/review', methods=['GET'])
