@@ -12,7 +12,7 @@ function writeBtn() {
 $(document).ready(function () {
     $('#review_box').html('');
     getReview();
-    // getChart();
+    getChart();
     $('#actors').html('');
     getActor();
 });
@@ -105,41 +105,42 @@ function validateLength(obj) {
 
 
 //차트
-//
-// function getChart() {
-//     $.ajax({
-//         type: "GET",
-//         url: "/genre",
-//         data: {},
-//         success: function (response) {
-//             if (response["result"] == "success") {
-//                 // let genre = response['genre'];
-//                 let tempHtml = ``
-//                 google.charts.load("current", {packages: ["corechart"]});
-//                 google.charts.setOnLoadCallback(drawChart);
-//
-//                 function drawChart() {
-//                     var data = google.visualization.arrayToDataTable([
-//                         ['{{ "Movie" }}', '{{ "Movie Genre" }}']
-//                         // ['드라마', 11],
-//                         // ['코미디', 5],
-//                         // ['액션', 2],
-//                         // ['기타', 2]
-//                     ]);
-//
-//                     var options = {
-//                         title: '나의 영화 취향',
-//                         pieHole: 0.5,
-//                     };
-//
-//                     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-//                     chart.draw(data, options);
-//                 }
-//             }
-//         }
-//     })
-// }
 
+function drawChart() {
+    $.ajax({
+        type: "GET",
+        url: "/genre",
+        data: {},
+        success: function (response) {
+            if (response["result"] == "success") {
+                let genre = response['genre'];
+                var data = google.visualization.arrayToDataTable([
+                    ['Movie', 'Movie Genre'],
+                    [genre[0]._id, genre[0].count],
+                    [genre[1]._id, genre[1].count],
+                    [genre[2]._id, genre[2].count],
+                    [genre[3]._id, genre[3].count],
+                    [genre[4]._id, genre[4].count]
+                ]);
+
+                var options = {
+                    title: '',
+                    pieHole: 0.4,
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(data, options);
+            }
+        }
+    })
+}
+
+
+function getChart() {
+    google.charts.load("current", {packages: ["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+
+}
 
 //배우
 

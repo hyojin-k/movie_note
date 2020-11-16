@@ -82,19 +82,26 @@ def write_review():
     return jsonify({'result': 'success', 'msg': '리뷰가 저장되었습니다.'})
 
 
+@app.route('/review', methods=['GET'])
+def get_review():
+    reviews = list(db.reviews.find({},{'_id':False}))
+
+    return jsonify({'result': 'success', 'reviews': reviews })
+
+
+
 @app.route('/genre', methods=['GET'])
 def count_genre():
     genre = list(db.reviews.aggregate([
         {'$group':{'_id':'$genre', 'count':{'$sum':1}}},
+        {'$sort': {'count': -1}},
         {'$limit':5}
     ]))
 
     # data = {'Movie' : 'Movie Genre', genre[0]['_id'] : genre[0]['count'], genre[1]['_id'] : genre[1]['count'], genre[2]['_id'] : genre[2]['count'], genre[3]['_id'] : genre[3]['count'], genre[4]['_id'] : genre[4]['count'] }
     # print(data)
 
-    # return render_template('index.html', data = data),
     return jsonify({'result': 'success', 'genre': genre})
-
 
 
 @app.route('/actor', methods=['GET'])
@@ -111,13 +118,6 @@ def count_actor():
     # print(actor)
 
     return jsonify({'result': 'success', 'actor': actor })
-
-
-@app.route('/review', methods=['GET'])
-def get_review():
-    reviews = list(db.reviews.find({},{'_id':False}))
-
-    return jsonify({'result': 'success', 'reviews': reviews })
 
 
 if __name__ == '__main__':
