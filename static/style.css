@@ -151,11 +151,7 @@ h2 {
     position: relative;
     width: 45%;
     float: left;
-    margin: 15px 0;
-}
-
-.review:nth-child(2n) {
-    margin-left: 5%;
+    margin: 15px 2.5%;
 }
 
 .review_img {
@@ -242,25 +238,18 @@ h2 {
 }
 
 h4 {
-    width: 80%;
-    border: 1px solid #424242;
-    padding: 5px 20px;
-    margin-top: 20px;
-    border-radius: 30px;
+    padding-top: 10px;
 }
 
 .pref_wrap {
-    /*border: 1px solid red;*/
-    /*box-sizing: border-box;*/
+    border: 1px solid #bdbdbd;
+    border-radius: 15px;
+    padding: 20px;
     margin: 10px;
 }
 
-.pref_wrap ul {
-    padding: 10px 0;
-}
-
 .pref_wrap ul li {
-    padding: 5px 0;
+    padding-bottom: 10px;
 }
 
 /* 장르 */
@@ -272,8 +261,8 @@ h4 {
 }
 
 #donutchart {
-    /*border: 1px solid blue;*/
-    /*box-sizing: border-box;*/
+    border: 1px solid blue;
+    box-sizing: border-box;
     width: 80%;
     height: 200px;
     margin: 0 auto;
@@ -287,9 +276,7 @@ h4 {
 }
 
 .actor_wrap {
-    /*border: 1px solid blue;*/
-    /*box-sizing: border-box;*/
-    margin: 16px 0;
+    height: 200px;
 }
 
 .actor_btn {
@@ -301,9 +288,6 @@ h4 {
     margin: 0 5%;
 }
 
-.actor_img {
-
-}
 .actor_name{
-    line-height: 2;
+    padding: 12px;
 }
