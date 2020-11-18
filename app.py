@@ -4,8 +4,9 @@ from bs4 import BeautifulSoup
 import requests
 
 app = Flask(__name__)
-
 client = MongoClient('localhost', 27017)
+
+# client = MongoClient('mongodb://test:test@52.78.113.103', 27017)
 db = client.myproject
 
 # HTML 화면 보여주기
@@ -13,7 +14,7 @@ db = client.myproject
 def home():
     return render_template('index.html')
 
-
+# 리뷰 작성
 @app.route('/review', methods=['POST'])
 def write_review():
 
@@ -89,6 +90,11 @@ def get_review():
     return jsonify({'result': 'success', 'reviews': reviews })
 
 
+# 리뷰 지우기
+
+
+
+# 차트
 
 @app.route('/genre', methods=['GET'])
 def count_genre():
@@ -101,8 +107,19 @@ def count_genre():
     # data = {'Movie' : 'Movie Genre', genre[0]['_id'] : genre[0]['count'], genre[1]['_id'] : genre[1]['count'], genre[2]['_id'] : genre[2]['count'], genre[3]['_id'] : genre[3]['count'], genre[4]['_id'] : genre[4]['count'] }
     # print(data)
 
-    return jsonify({'result': 'success', 'genre': genre})
+    genre_list = list(db.reviews.find({'genre':{'$in':[genre[0]["_id"]]}}))
+    print(genre_list)
 
+    top_genre = []
+    for genres in genre_list:
+        print(genres['title'])
+        top_genre.append(genres['title'])
+
+    return jsonify({'result': 'success', 'genre': genre, 'top_genre': top_genre})
+
+#
+
+# 배우
 
 @app.route('/actor', methods=['GET'])
 def count_actor():
@@ -114,10 +131,19 @@ def count_actor():
         {'$limit':3}
 
     ]))
-
     # print(actor)
 
-    return jsonify({'result': 'success', 'actor': actor })
+
+    movie_list1 = list(db.reviews.find({'actors.actor':{'$in':[actor[0]["_id"]["actor"]]}}))
+
+    top_movie1 = []
+    for movies1 in movie_list1:
+        print(movies1['title'])
+        top_movie1.append(movies1['title'])
+
+    # print(movie_list)
+
+    return jsonify({'result': 'success', 'actor': actor, 'movie1': top_movie1})
 
 
 if __name__ == '__main__':

@@ -14,6 +14,8 @@ $(document).ready(function () {
     getReview();
     getChart();
     $('#actors').html('');
+    $('#movie_list1').html('');
+    $('#movie_list2').html('');
     getActor();
 });
 
@@ -77,11 +79,11 @@ function getReview() {
                                             <span class="line"></span>
                                             <p class="review_line">"${comment}"</p>
                                         </div>
-                                        <button onclick="close()" id="delete_btn" class="delete">
+                                        <a href="#" onclick="deleteReview()" id="delete_btn" class="delete">
                                             <span class="material-icons">
                                                 clear
                                             </span>
-                                        </button>
+                                        </a>
                                     </div>`
 
                     $('#review_box').append(tempHtml);
@@ -103,7 +105,6 @@ function validateLength(obj) {
 
 //리뷰 지우기
 
-
 //차트
 
 function drawChart() {
@@ -114,6 +115,7 @@ function drawChart() {
         success: function (response) {
             if (response["result"] == "success") {
                 let genre = response['genre'];
+
                 var data = google.visualization.arrayToDataTable([
                     ['Movie', 'Movie Genre'],
                     [genre[0]._id, genre[0].count],
@@ -130,6 +132,20 @@ function drawChart() {
 
                 var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
                 chart.draw(data, options);
+
+
+                let top_genre = response['top_genre']
+
+                let genre1 = top_genre[0];
+                let genre2 = top_genre[1];
+                let genre3 = top_genre[2];
+
+                let tempHtml = `<li>${genre1}</li>
+                                <li>${genre2}</li>
+                                <li>${genre3}</li>`
+
+                $('#movie_list1').append(tempHtml);
+
             }
         }
     })
@@ -153,6 +169,8 @@ function getActor() {
         success: function (response) {
             if (response["result"] == "success") {
                 let actor = response['actor'];
+                let movies1 = response['movie1'];
+
 
                 let image_fir = actor[0]['_id']['image'];
                 let actor_fir = actor[0]['_id']['actor'];
@@ -160,6 +178,12 @@ function getActor() {
                 let actor_sec = actor[1]['_id']['actor'];
                 let image_trd = actor[2]['_id']['image'];
                 let actor_trd = actor[2]['_id']['actor'];
+
+
+                let movie1_1 = movies1[0];
+                let movie1_2 = movies1[1];
+                let movie1_3 = movies1[2];
+
 
                 let tempHtml = `<button class="actor_btn">
                                     <img class="actor_img"
@@ -180,8 +204,17 @@ function getActor() {
                                     <p class="actor_name">${actor_trd}</p>
                                 </button>`
 
+
+                let listHtml1 = `<li>${movie1_1}</li>
+                                <li>${movie1_2}</li>
+                                <li>${movie1_3}</li>`
+
+
                 $('#actors').append(tempHtml);
+
+                $('#movie_list2').append(listHtml1);
             }
         }
     })
+
 }
