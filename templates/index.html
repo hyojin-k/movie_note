@@ -6,7 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- CSS -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <!--        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+        <link rel="stylesheet" href="static/style.css?" type="text/css">
+
         <!-- FONT -->
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Raleway:ital@1&display=swap"
               rel="stylesheet">
@@ -20,7 +22,8 @@
                 integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
                 crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <!--        <script src="{{ url_for('static', filename='script.js') }}"></script>-->
+        <script src="static/script.js?"></script>
 
 
         <title>MOVIE NOTE</title>
@@ -35,69 +38,33 @@
             <span class="header_line"></span>
         </header>
         <div class="main_center">
-            <div class="my_list">
-                <h2>MY LIST</h2>
-                <div class="add_review">
-                    <button onclick="writeBtn()" class="write_btn">ADD REVIEW</button>
-                    <div id="write_wrap" class="write_wrap">
-                        <div class="write_date">
-                            <span class="write_div">날짜</span>
-                            <input id="post_date" type="text" placeholder="작성날짜를 입력하세요">
-                        </div>
-                        <div class="write_title">
-                            <span class="write_div">제목</span>
-                            <input id="post_title" type="text" placeholder="제목을 입력하세요">
-                        </div>
-                        <div class="write_url">
-                            <span class="write_div">URL</span>
-                            <input id="post_url" type="text" placeholder="URL을 입력하세요">
-                        </div>
-                        <div class="write_review">
-                            <span class="write_div">리뷰</span>
-                            <textarea id="post_comment" cols="30" rows="5" placeholder="130자 이내로 작성하세요"
-                                      onkeyup='validateLength(this)'></textarea>
-                        </div>
-                        <button onclick="writeComplete()" id="add_btn" class="write_complete">ADD</button>
-                        <button onclick="close()" id="close_btn" class="close">
-                            <span class="material-icons">
-                                clear
-                            </span>
-                        </button>
+            <div class="add_review">
+                <button onclick="writeBtn()" class="write_btn">ADD REVIEW</button>
+                <div id="write_wrap" class="write_wrap">
+                    <div class="write_date">
+                        <span class="write_div">날짜</span>
+                        <input id="post_date" type="text" placeholder="작성날짜를 입력하세요">
                     </div>
-                </div>
-                <div id="review_box" class="reviews clearfix">
-                    <div class="review clearfix">
-                        <img class="review_img"
-                             src="https://movie-phinf.pstatic.net/20201021_273/16032618054109Yvje_JPEG/movie_image.jpg"
-                             alt="">
-                        <div class="review_wrap">
-                            <p class="review_date">20201101</p>
-                            <p class="review_title">삼진그룹 영어 토익반</p>
-                            <span class="line"></span>
-                            <p class="review_line">" 그와 사는가 그들은 군영과 과실이 풍부하게 실로 곧 뿐이다. 얼마나 두기 하는 곳으로 꽃 청춘이 따뜻한 않는 봄바람이다.
-                                아니더면, 우리 수 찬미를 피다. 동해물과 백두산이 마르고 닳도"</p>
-                        </div>
-                        <button onclick="close()" id="delete_btn" class="delete">
-                            <span class="material-icons">
-                                clear
-                            </span>
-                        </button>
+                    <div class="write_title">
+                        <span class="write_div">제목</span>
+                        <input id="post_title" type="text" placeholder="제목을 입력하세요">
                     </div>
-                    <div class="review clearfix">
-                        <img class="review_img"
-                             src="https://movie-phinf.pstatic.net/20201014_280/16026390107613Rrc8_JPEG/movie_image.jpg"
-                             alt="">
-                        <div class="review_wrap">
-                            <p class="review_date">20201101</p>
-                            <p class="review_title">위플래쉬</p>
-                            <span class="line"></span>
-                            <p class="review_line">" 동해물과 백두산이 마르고 닳도록 하으님이 보우하사 우리 나라 만세 무궁화 삼"</p>
-                        </div>
+                    <div class="write_url">
+                        <span class="write_div">URL</span>
+                        <input id="post_url" type="text" placeholder="URL을 입력하세요">
+                        <span class="write_sub">네이버 영화 URL만 사용가능</span>
                     </div>
-
-                    <div class="btn_wrap">
-                        <button class="more_btn">MORE</button>
+                    <div class="write_review">
+                        <span class="write_div">리뷰</span>
+                        <textarea id="post_comment" cols="30" rows="5" placeholder="130자 이내로 작성하세요"
+                                  onkeyup='validateLength(this)'></textarea>
                     </div>
+                    <button onclick="writeComplete()" id="add_btn" class="write_complete">ADD</button>
+<!--                    <button onclick="close()" id="close_btn" class="close">-->
+<!--                            <span class="material-icons">-->
+<!--                                clear-->
+<!--                            </span>-->
+<!--                    </button>-->
                 </div>
             </div>
             <div class="result">
@@ -110,7 +77,7 @@
                         <div class="pref_wrap">
                             <h4>MY LIST</h4>
                             <span class="line2"></span>
-                            <ul>
+                            <ul id="movie_list1">
                                 <li>삼진그룹 영어 토익반</li>
                                 <li>위플래쉬</li>
                                 <li>담보</li>
@@ -149,7 +116,7 @@
                         <div class="pref_wrap">
                             <h4>MY LIST</h4>
                             <span class="line2"></span>
-                            <ul>
+                            <ul id="movie_list2">
                                 <li>삼진그룹 영어 토익반</li>
                                 <li>위플래쉬</li>
                                 <li>담보</li>
@@ -164,6 +131,34 @@
                     </div>
                 </div>
             </div>
+            <div class="my_list">
+                <h2>MY LIST</h2>
+
+                <div id="review_box" class="reviews clearfix">
+                    <div class="review clearfix">
+                        <img class="review_img"
+                             src="https://movie-phinf.pstatic.net/20201021_273/16032618054109Yvje_JPEG/movie_image.jpg"
+                             alt="">
+                        <div class="review_wrap">
+                            <p class="review_date">20201101</p>
+                            <p class="review_title">삼진그룹 영어 토익반</p>
+                            <span class="line"></span>
+                            <p class="review_line">" 그와 사는가 그들은 군영과 과실이 풍부하게 실로 곧 뿐이다. 얼마나 두기 하는 곳으로 꽃 청춘이 따뜻한 않는 봄바람이다.
+                                아니더면, 우리 수 찬미를 피다. 동해물과 백두산이 마르고 닳도"</p>
+                        </div>
+                        <a href="#" onclick="deleteReview()" id="delete_btn" class="delete">
+                            <span class="material-icons">
+                                clear
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="btn_wrap">
+                        <button class="more_btn">MORE</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>

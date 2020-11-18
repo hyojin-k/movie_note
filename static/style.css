@@ -61,18 +61,11 @@ header{
 h2 {
     font-family: 'Raleway', sans-serif;
     text-align: center;
-    margin: 80px 0;
+    margin: 100px 0;
 }
-
 
 /*-----------------------------------------------------------*/
 
-/* 리뷰 목록 */
-
-.main_center {
-    max-width: 1024px;
-    margin: 0 auto;
-}
 
 /* 리뷰 작성하기 */
 
@@ -87,7 +80,7 @@ h2 {
     border: 2px solid black;
     border-radius: 30px;
     padding: 10px 20px;
-    margin: 0 auto 80px;
+    margin: 100px auto;
 }
 
 .write_wrap {
@@ -107,6 +100,14 @@ h2 {
 
 .write_div {
     margin-right: 10px;
+}
+.write_sub{
+    display:block;
+    color: red;
+    padding-left: 44px;
+    padding-top: 4px;
+    font-size: 10px;
+    font-style: italic;
 }
 
 .write_date input, .write_title input, .write_url input {
@@ -141,6 +142,92 @@ h2 {
     position: absolute;
     top: 20px;
     right: 20px;
+}
+
+
+
+/*-----------------------------------------------------------*/
+
+/* 취향 분석 */
+
+.result_wrap {
+    margin: 80px 0;
+}
+
+.result_sub {
+    width: 45%;
+    text-align: center;
+}
+
+.line2 {
+    display: inline-block;
+    width: 32px;
+    background-color: #bdbdbd;
+    margin: 28px 0 10px 0;
+    height: 0.8px;
+}
+
+h4 {
+    padding-top: 10px;
+}
+
+.pref_wrap {
+    border: 1px solid #bdbdbd;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+}
+
+.pref_wrap ul li {
+    padding-bottom: 10px;
+}
+
+/* 장르 */
+
+.genre {
+    width: 45%;
+    margin-right: 10%;
+    float: left;
+}
+
+#donutchart {
+    width: 100%;
+    height: 250px;
+    margin: 0 auto;
+}
+
+/* 배우 */
+
+.actor {
+    width: 45%;
+    float: left;
+}
+
+.actor_wrap {
+    padding-top: 40px;
+    height: 210px;
+}
+
+.actor_btn {
+    float: left;
+    width: 30%;
+}
+
+.actor_btn:nth-child(2) {
+    margin: 0 5%;
+}
+
+.actor_name{
+    padding: 12px;
+}
+
+/*-----------------------------------------------------------*/
+
+/* 리뷰 목록 */
+
+.main_center {
+    max-width: 1024px;
+    margin: 0 auto;
 }
 
 /* 리스트 */
@@ -215,79 +302,4 @@ h2 {
     border-radius: 30px;
     padding: 10px 20px;
     margin: 80px auto;
-}
-
-/*-----------------------------------------------------------*/
-
-/* 취향 분석 */
-
-.result_wrap {
-    margin: 80px 0;
-}
-
-.result_sub {
-    text-align: center;
-}
-
-.line2 {
-    display: inline-block;
-    width: 32px;
-    background-color: #bdbdbd;
-    margin: 28px 0;
-    height: 0.8px;
-}
-
-h4 {
-    padding-top: 10px;
-}
-
-.pref_wrap {
-    border: 1px solid #bdbdbd;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 10px;
-}
-
-.pref_wrap ul li {
-    padding-bottom: 10px;
-}
-
-/* 장르 */
-
-.genre {
-    width: 45%;
-    margin-right: 10%;
-    float: left;
-}
-
-#donutchart {
-    border: 1px solid blue;
-    box-sizing: border-box;
-    width: 80%;
-    height: 200px;
-    margin: 0 auto;
-}
-
-/* 배우 */
-
-.actor {
-    width: 45%;
-    float: left;
-}
-
-.actor_wrap {
-    height: 200px;
-}
-
-.actor_btn {
-    float: left;
-    width: 30%;
-}
-
-.actor_btn:nth-child(2) {
-    margin: 0 5%;
-}
-
-.actor_name{
-    padding: 12px;
 }
