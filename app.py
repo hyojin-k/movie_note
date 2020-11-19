@@ -85,13 +85,18 @@ def write_review():
 
 @app.route('/review', methods=['GET'])
 def get_review():
-    reviews = list(db.reviews.find({},{'_id':False}))
+    reviews = list(db.reviews.find({},{'_id':False}).sort('date',-1))
 
     return jsonify({'result': 'success', 'reviews': reviews })
 
 
 # 리뷰 지우기
 
+@app.route('/review/delete', methods=['POST'])
+def delete_review():
+    url_receive = request.form['url_give']
+    db.reviews.delete_one({'url':url_receive})
+    return jsonify({'result': 'success'})
 
 
 # 차트
@@ -132,7 +137,6 @@ def count_actor():
 
     ]))
     # print(actor)
-
 
     movie_list1 = list(db.reviews.find({'actors.actor':{'$in':[actor[0]["_id"]["actor"]]}}))
 

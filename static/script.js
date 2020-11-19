@@ -68,6 +68,7 @@ function getReview() {
                     let date = reviews[i]['date'];
                     let title = reviews[i]['title'];
                     let comment = reviews[i]['comment'];
+                    let url = reviews[i]['url']
 
                     let tempHtml = `<div class="review clearfix">
                                         <img class="review_img"
@@ -79,7 +80,7 @@ function getReview() {
                                             <span class="line"></span>
                                             <p class="review_line">"${comment}"</p>
                                         </div>
-                                        <a href="#" onclick="deleteReview()" id="delete_btn" class="delete">
+                                        <a href="#" onclick="deleteReview('${url}')" id="delete_btn" class="delete">
                                             <span class="material-icons">
                                                 clear
                                             </span>
@@ -105,6 +106,20 @@ function validateLength(obj) {
 
 //리뷰 지우기
 
+function deleteReview(url) {
+    $.ajax({
+        type: 'POST',
+        url: '/review/delete',
+        data: {url_give:url},
+        success: function (response) {
+            if (response['result'] == 'success') {
+                alert('리뷰를 삭제했습니다.')
+                window.location.reload();
+            }
+        }
+    });
+}
+
 //차트
 
 function drawChart() {
@@ -115,15 +130,18 @@ function drawChart() {
         success: function (response) {
             if (response["result"] == "success") {
                 let genre = response['genre'];
+                console.log("work")
+                genre_result = [['Movie', 'Movie Genre']];
 
-                var data = google.visualization.arrayToDataTable([
-                    ['Movie', 'Movie Genre'],
-                    [genre[0]._id, genre[0].count],
-                    [genre[1]._id, genre[1].count],
-                    [genre[2]._id, genre[2].count],
-                    [genre[3]._id, genre[3].count],
-                    [genre[4]._id, genre[4].count]
-                ]);
+                for (let i = 0; i < genre.length; i++) {
+                    genre_result.push([genre[i]._id, genre[i].count])
+                }
+
+                console.log(genre_result);
+
+
+                var data = google.visualization.arrayToDataTable(genre_result);
+
 
                 var options = {
                     title: '',
@@ -185,6 +203,7 @@ function getActor() {
                 let movie1_3 = movies1[2];
 
 
+
                 let tempHtml = `<button class="actor_btn">
                                     <img class="actor_img"
                                          src="${image_fir}"
@@ -209,10 +228,11 @@ function getActor() {
                                 <li>${movie1_2}</li>
                                 <li>${movie1_3}</li>`
 
-
                 $('#actors').append(tempHtml);
 
                 $('#movie_list2').append(listHtml1);
+
+
             }
         }
     })
